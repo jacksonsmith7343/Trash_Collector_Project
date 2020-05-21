@@ -17,11 +17,13 @@ namespace Trash_Collector.Models
         public string Name { get; set; }
         public string PickUpDay { get; set; }
 
-        public string RequestExtraPickUp { get; set; }
+        public string ExtraPickUp { get; set; }
 
         public int PaymentOwed { get; set; }
 
-        public string StartEndPickUpDay { get; set; }
+        public string SuspendPickUpDay { get; set; }
+
+        public string ContinuePickUpDay { get; set; }
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }

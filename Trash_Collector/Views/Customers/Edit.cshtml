@@ -14,14 +14,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="PickUpDay" class="control-label"></label>
                 <input asp-for="PickUpDay" class="form-control" />
                 <span asp-validation-for="PickUpDay" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RequestExtraPickUp" class="control-label"></label>
-                <input asp-for="RequestExtraPickUp" class="form-control" />
-                <span asp-validation-for="RequestExtraPickUp" class="text-danger"></span>
+                <label asp-for="ExtraPickUp" class="control-label"></label>
+                <input asp-for="ExtraPickUp" class="form-control" />
+                <span asp-validation-for="ExtraPickUp" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PaymentOwed" class="control-label"></label>
@@ -29,9 +34,14 @@
                 <span asp-validation-for="PaymentOwed" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartEndPickUpDay" class="control-label"></label>
-                <input asp-for="StartEndPickUpDay" class="form-control" />
-                <span asp-validation-for="StartEndPickUpDay" class="text-danger"></span>
+                <label asp-for="SuspendPickUpDay" class="control-label"></label>
+                <input asp-for="SuspendPickUpDay" class="form-control" />
+                <span asp-validation-for="SuspendPickUpDay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContinuePickUpDay" class="control-label"></label>
+                <input asp-for="ContinuePickUpDay" class="form-control" />
+                <span asp-validation-for="ContinuePickUpDay" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

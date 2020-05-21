@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trash_Collector.Data;
 
 namespace Trash_Collector.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200521144247_NewProperties")]
+    partial class NewProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,24 +50,10 @@ namespace Trash_Collector.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2d9f75b5-102d-462e-912c-d19380c6be9b",
-                            ConcurrencyStamp = "af1f64c3-3013-4fe8-8d7b-e33943cdbfed",
+                            Id = "3985004c-8158-4fcd-b480-95b21ab77ef2",
+                            ConcurrencyStamp = "18b13400-2a95-4b6d-83f5-3e897b7d718d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "b2cc8c13-9c66-403a-b8ef-1812c4d6f52c",
-                            ConcurrencyStamp = "64145e6f-7456-4c3a-bdda-65b65e058472",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "17da1775-036c-4a1a-9c3e-5a2f165578ed",
-                            ConcurrencyStamp = "09628ac9-c00b-40ff-827e-bf861ce04d0d",
-                            Name = "Employee",
-                            NormalizedName = "Employee"
                         });
                 });
 

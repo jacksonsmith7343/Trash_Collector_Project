@@ -11,29 +11,41 @@
     <h4>Customer</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PickUpDay)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PickUpDay)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RequestExtraPickUp)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExtraPickUp)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RequestExtraPickUp)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExtraPickUp)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PaymentOwed)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PaymentOwed)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartEndPickUpDay)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SuspendPickUpDay)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartEndPickUpDay)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SuspendPickUpDay)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ContinuePickUpDay)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ContinuePickUpDay)
         </dd>
     </dl>
     
