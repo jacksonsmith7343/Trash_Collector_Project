@@ -59,7 +59,7 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PickUpDay,RequestExtraPickUp,PaymentOwed,StartEndPickUpDay")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,PickUpDay,ExtraPickUp,PaymentOwed,SuspendPickupDay,ContinuePickupDay,StartEndPickUpDay")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -71,14 +71,18 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit()
         {
-            if (id == null)
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+
+            if (userId == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            //var customer = await _context.Customers.FindAsync(userId);
+
             if (customer == null)
             {
                 return NotFound();
@@ -86,12 +90,14 @@ namespace Trash_Collector.Controllers
             return View(customer);
         }
 
+
+
         // POST: Customers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PickUpDay,RequestExtraPickUp,PaymentOwed,StartEndPickUpDay")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PickUpDay,ExtraPickUp,PaymentOwed,SuspendPickupDay,ContinuePickupDay,StartEndPickUpDay")] Customer customer)
         {
             if (id != customer.Id)
             {
@@ -154,5 +160,9 @@ namespace Trash_Collector.Controllers
         {
             return _context.Customers.Any(e => e.Id == id);
         }
+
+
+
+
     }
 }

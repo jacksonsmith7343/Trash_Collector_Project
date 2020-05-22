@@ -20,10 +20,12 @@ namespace Trash_Collector.Models
         public string ExtraPickUp { get; set; }
 
         public int PaymentOwed { get; set; }
-
+        
         public string SuspendPickUpDay { get; set; }
 
         public string ContinuePickUpDay { get; set; }
+
+        public string ZipCode { get; set; }
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
