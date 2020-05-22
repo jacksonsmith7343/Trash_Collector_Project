@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trash_Collector.Data;
 
 namespace Trash_Collector.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200522161800_ZipCode")]
+    partial class ZipCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,22 +50,22 @@ namespace Trash_Collector.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3b99f349-7379-4067-8240-83eb7e58252c",
-                            ConcurrencyStamp = "a064bca3-083c-4f31-8c35-d9b71651bec7",
+                            Id = "0f7ad429-6d3c-4424-a12f-19e893e661f2",
+                            ConcurrencyStamp = "a839f67d-0212-4b0f-ad5d-c6733b53b4c6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "67b1cf3d-9f2e-4147-8ecf-4a0d20df7d5d",
-                            ConcurrencyStamp = "3a1d6615-884e-46f3-99a1-94fec907b4cb",
+                            Id = "efb02aa7-e307-4e96-83f1-d52fe20e6513",
+                            ConcurrencyStamp = "145be6d1-6024-4fcb-9b45-13b11b3dda27",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "17ca762b-9c13-412d-b9ec-b0a105b0013c",
-                            ConcurrencyStamp = "818bfc93-9007-4ecf-b5f1-6483be21fa90",
+                            Id = "14bf75a1-e041-441c-b2de-a4e25d6bb835",
+                            ConcurrencyStamp = "f11a3f5d-526f-4c45-9da7-069fcd9a61f6",
                             Name = "Employee",
                             NormalizedName = "Employee"
                         });

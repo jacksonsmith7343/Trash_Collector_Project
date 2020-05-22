@@ -26,6 +26,8 @@ namespace Trash_Collector.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
 
             return View(await _context.Customers.ToListAsync());
         }
@@ -51,6 +53,9 @@ namespace Trash_Collector.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
             return View();
         }
 
@@ -61,13 +66,19 @@ namespace Trash_Collector.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,PickUpDay,ExtraPickUp,PaymentOwed,SuspendPickupDay,ContinuePickupDay,StartEndPickUpDay")] Customer customer)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            customer.IdentityUserId = userId;
+            _context.Add(customer);
+            _context.SaveChanges();
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            return View(customer);
+            return View();
         }
 
         // GET: Customers/Edit/5
