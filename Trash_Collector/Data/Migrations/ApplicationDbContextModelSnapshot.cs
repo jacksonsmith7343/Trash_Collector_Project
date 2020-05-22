@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trash_Collector.Data;
 
-namespace Trash_Collector.Data.Migrations
+namespace Trash_Collector.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -48,22 +48,22 @@ namespace Trash_Collector.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3b99f349-7379-4067-8240-83eb7e58252c",
-                            ConcurrencyStamp = "a064bca3-083c-4f31-8c35-d9b71651bec7",
+                            Id = "0a876ffd-309e-4efc-9942-07d6471e56c8",
+                            ConcurrencyStamp = "b0329158-62cc-4865-8c51-f60b8cd7a693",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "67b1cf3d-9f2e-4147-8ecf-4a0d20df7d5d",
-                            ConcurrencyStamp = "3a1d6615-884e-46f3-99a1-94fec907b4cb",
+                            Id = "4b600538-f592-4ee2-b38e-ba1129eeba3d",
+                            ConcurrencyStamp = "d682976b-21ce-43db-8b5d-dca6d43765c2",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "17ca762b-9c13-412d-b9ec-b0a105b0013c",
-                            ConcurrencyStamp = "818bfc93-9007-4ecf-b5f1-6483be21fa90",
+                            Id = "43627a82-7db2-4667-a617-8911f8f0063d",
+                            ConcurrencyStamp = "e2932686-b65e-41f4-8d28-49a9c107704a",
                             Name = "Employee",
                             NormalizedName = "Employee"
                         });

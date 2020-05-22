@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trash_Collector.Data;
 
-namespace Trash_Collector.Data.Migrations
+namespace Trash_Collector.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200520204235_Initial")]
+    [Migration("20200522184331_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,10 +50,24 @@ namespace Trash_Collector.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "647b521d-76be-4193-87b2-136adf95f7c0",
-                            ConcurrencyStamp = "ca8c67f8-7453-49ed-800d-36da1a320a06",
+                            Id = "01cbe009-e6eb-45f5-bbae-be8488a0b11d",
+                            ConcurrencyStamp = "192fbf54-3d0d-4de2-bc97-9f513df58573",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "09e49b85-022d-45b9-9048-a814a49edd73",
+                            ConcurrencyStamp = "47e76446-1563-4b75-8660-9b3b5cac57b8",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "2404680e-ff09-4ae8-9426-36d4d6ed1fc4",
+                            ConcurrencyStamp = "a3342677-4977-4f1e-9200-7c35fcae4200",
+                            Name = "Employee",
+                            NormalizedName = "Employee"
                         });
                 });
 
@@ -233,19 +247,33 @@ namespace Trash_Collector.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ContinuePickUpDay")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExtraPickUp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PaymentOwed")
                         .HasColumnType("int");
 
                     b.Property<string>("PickUpDay")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RequestExtraPickUp")
+                    b.Property<string>("SuspendPickUpDay")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StartEndPickUpDay")
+                    b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.ToTable("Customers");
                 });
@@ -317,6 +345,13 @@ namespace Trash_Collector.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Trash_Collector.Models.Customer", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
                 });
 #pragma warning restore 612, 618
         }

@@ -56,7 +56,7 @@ namespace Trash_Collector.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customer = _context.Customers.Where(c => c.IdentityUserId ==
             userId).SingleOrDefault();
-            return View();
+            return View(customer);
         }
 
         // POST: Customers/Create
@@ -66,8 +66,8 @@ namespace Trash_Collector.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,PickUpDay,ExtraPickUp,PaymentOwed,SuspendPickupDay,ContinuePickupDay,StartEndPickUpDay")] Customer customer)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            customer.IdentityUserId = userId;
+            
+            
             _context.Add(customer);
             _context.SaveChanges();
 
