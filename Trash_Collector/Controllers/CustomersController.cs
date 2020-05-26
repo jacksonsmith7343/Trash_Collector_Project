@@ -53,7 +53,7 @@ namespace Trash_Collector.Controllers
             }
 
             var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.CustomerId == id);
             if (customer == null)
             {
                 return NotFound();
@@ -90,7 +90,7 @@ namespace Trash_Collector.Controllers
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var customerInDb = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+            var customerInDb = _context.Customers.Where(c => c.CustomerId == id).FirstOrDefault();
 
             return View(customerInDb);
 
@@ -107,7 +107,7 @@ namespace Trash_Collector.Controllers
         {
             try
             {
-                var customerInDb = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+                var customerInDb = _context.Customers.Where(c => c.CustomerId == id).FirstOrDefault();
                 customerInDb.Name = customer.Name;
                 customerInDb.PickUpDay = customer.PickUpDay;
                 customerInDb.ExtraPickUp = customer.ExtraPickUp;
@@ -126,7 +126,7 @@ namespace Trash_Collector.Controllers
         // GET: Customers/Delete/5
         public ActionResult Delete(int? id)
         {
-            var customerInDb = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+            var customerInDb = _context.Customers.Where(c => c.CustomerId == id).FirstOrDefault();
             return View(customerInDb);
 
         }
@@ -139,7 +139,7 @@ namespace Trash_Collector.Controllers
             try
             {
                 
-                var customerInDb = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+                var customerInDb = _context.Customers.Where(c => c.CustomerId == id).FirstOrDefault();
                 _context.Remove(customerInDb);
                 _context.SaveChanges();
                 return RedirectToAction("Index");

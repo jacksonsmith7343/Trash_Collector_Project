@@ -156,7 +156,7 @@ namespace Trash_Collector.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    CustomerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     PickUpDay = table.Column<string>(nullable: true),
@@ -165,11 +165,12 @@ namespace Trash_Collector.Migrations
                     SuspendPickUpDay = table.Column<string>(nullable: true),
                     ContinuePickUpDay = table.Column<string>(nullable: true),
                     ZipCode = table.Column<int>(nullable: false),
-                    IdentityUserId = table.Column<string>(nullable: true)
+                    IdentityUserId = table.Column<string>(nullable: true),
+                    EmployeeId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                     table.ForeignKey(
                         name: "FK_Customers_AspNetUsers_IdentityUserId",
                         column: x => x.IdentityUserId,
@@ -182,16 +183,16 @@ namespace Trash_Collector.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    ZipCode = table.Column<int>(nullable: false)
+                    EmployeeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ZipCode = table.Column<int>(nullable: false),
                     CompletedPickup = table.Column<bool>(nullable: false),
                     PickUpWithChargeApplied = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.ZipCode);
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
                     table.ForeignKey(
                         name: "FK_Employees_AspNetUsers_IdentityUserId",
                         column: x => x.IdentityUserId,
@@ -203,17 +204,17 @@ namespace Trash_Collector.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ed61130d-cd34-41f1-b776-d0ff0a24ddab", "94608143-8421-405e-9c25-163e8e363c2f", "Admin", "ADMIN" });
+                values: new object[] { "1e98da84-a63c-4442-9dbd-d79b506ca421", "4a1790aa-4da1-4bd3-b22e-6c8f40f5cbd1", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "26d17de2-78eb-4d5d-bfd8-4f1e1c8d5f5e", "4cc763c0-c9d0-422b-942c-f783a0adaa26", "Customer", "CUSTOMER" });
+                values: new object[] { "5ca8af54-41ca-4f90-8f68-fb0c44ec4d1d", "9d4bb4f8-79a1-422e-8055-a713f1b3ea67", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "5405f8fe-b298-4b29-af59-3c99fac46a5b", "473eaae7-c10e-4178-b7b2-45dc4d6aba31", "Employee", "Employee" });
+                values: new object[] { "8b2ba2e9-43d1-4fb3-ab93-c4aba3e9d8f3", "212f990c-90d9-4e3c-aa93-7b1543a8f1d3", "Employee", "Employee" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

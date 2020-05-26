@@ -48,7 +48,7 @@ namespace Trash_Collector.Controllers
             }
 
             var employee = await _context.Customers
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .FirstOrDefaultAsync(e => e.EmployeeId == id);
             if (employee == null)
             {
                 return NotFound();
@@ -82,7 +82,7 @@ namespace Trash_Collector.Controllers
         // GET: Employees/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var employeeInDb = _context.Employees.Where(e => e.Id == id).FirstOrDefault();
+            var employeeInDb = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
 
             return View(employeeInDb);
         }
@@ -96,7 +96,7 @@ namespace Trash_Collector.Controllers
         {
             try
             {
-                var employeeInDb = _context.Employees.Where(e => e.Id == id).FirstOrDefault();
+                var employeeInDb = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
                 employeeInDb.ZipCode = employee.ZipCode;
                 employeeInDb.CompletedPickup = employee.CompletedPickup;
                 employeeInDb.PickUpWithChargeApplied = employee.PickUpWithChargeApplied;
@@ -113,7 +113,7 @@ namespace Trash_Collector.Controllers
         public ActionResult Delete(int? id)
         {
 
-            var employeeInDb = _context.Employees.Where(e => e.Id == id).FirstOrDefault();
+            var employeeInDb = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
             return View(employeeInDb);
             
         }
@@ -126,7 +126,7 @@ namespace Trash_Collector.Controllers
             try
             {
 
-                var employeeInDb = _context.Employees.Where(e => e.Id == id).FirstOrDefault();
+                var employeeInDb = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
                 _context.Remove(employeeInDb);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -145,7 +145,7 @@ namespace Trash_Collector.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); //gains access to info about the user that is signed in 
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
-            var customersWithSpecificPickupDay = _context.Customers.Where(c => c.PickUpDay == employee.).ToList();
+            var customersWithSpecificPickupDay = _context.Customers.Where(c => c.PickUpDay == "Saturday").ToList();
             return View(customersWithSpecificPickupDay);
         }
 

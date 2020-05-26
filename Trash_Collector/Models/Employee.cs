@@ -12,13 +12,13 @@ namespace Trash_Collector.Models
     {
 
         [Key]
-        
+        public int EmployeeId { get; internal set; }
         public int ZipCode { get; set; }
 
         public bool CompletedPickup { get; set; }
         
         public int PickUpWithChargeApplied { get; set; }
-        public int Id { get; internal set; }
+        
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }

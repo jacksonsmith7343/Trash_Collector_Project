@@ -12,7 +12,7 @@ namespace Trash_Collector.Models
     {
         [Key]
 
-        public int Id { get; set; }
+        public int CustomerId { get; set; }
 
         public string Name { get; set; }
         public string PickUpDay { get; set; }
@@ -30,6 +30,6 @@ namespace Trash_Collector.Models
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
-
+        public int? EmployeeId { get; internal set; }
     }
 }
