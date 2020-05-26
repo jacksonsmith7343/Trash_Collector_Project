@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Trash_Collector.Data;
 using Trash_Collector.Models;
 
@@ -26,10 +27,21 @@ namespace Trash_Collector.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId ==
-            userId).SingleOrDefault();
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
 
-            return View(await _context.Customers.ToListAsync());
+            if (userId == null)
+            {
+                return RedirectToAction("Create");
+            }
+            else
+            {
+                return View(_context.Customers);
+            }
+
+
+
+
+            //return View();
         }
 
         // GET: Customers/Details/5
@@ -53,10 +65,11 @@ namespace Trash_Collector.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId ==
-            userId).SingleOrDefault();
-            return View(customer);
+            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var customer = _context.Customers.Where(c => c.IdentityUserId ==
+            //userId).SingleOrDefault();
+            //return View(customer);
+            return View();
         }
 
         // POST: Customers/Create
@@ -64,13 +77,9 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PickUpDay,ExtraPickUp,PaymentOwed,SuspendPickupDay,ContinuePickupDay,StartEndPickUpDay")] Customer customer)
+        public async Task<IActionResult> Create( Customer customer)
         {
             
-            
-            _context.Add(customer);
-            _context.SaveChanges();
-
 
             if (ModelState.IsValid)
             {
@@ -78,27 +87,31 @@ namespace Trash_Collector.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(customer);
         }
 
         // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> Edit(int id)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            var customerInDb = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
 
-            if (userId == null)
-            {
-                return NotFound();
-            }
+            return View(customerInDb);
 
-            //var customer = await _context.Customers.FindAsync(userId);
+            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
 
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            return View(customer);
+            //if (userId == null)
+            //{
+            //    return NotFound();
+            //}
+
+            ////var customer = await _context.Customers.FindAsync(userId);
+
+            //if (customer == null)
+            //{
+            //    return NotFound();
+            //}
+            //return View(customer);
         }
 
 
@@ -108,34 +121,24 @@ namespace Trash_Collector.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PickUpDay,ExtraPickUp,PaymentOwed,SuspendPickupDay,ContinuePickupDay,StartEndPickUpDay")] Customer customer)
+        public ActionResult Edit(int id, Customer customer)
         {
-            if (id != customer.Id)
+            try
             {
-                return NotFound();
+                var customerInDb = _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+                customerInDb.Name = customer.Name;
+                customerInDb.PickUpDay = customer.PickUpDay;
+                customerInDb.ExtraPickUp = customer.ExtraPickUp;
+                customerInDb.SuspendPickUpDay = customer.SuspendPickUpDay;
+                customerInDb.ContinuePickUpDay = customer.ContinuePickUpDay;
+                customerInDb.ZipCode = customer.ZipCode;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
             }
-
-            if (ModelState.IsValid)
+            catch
             {
-                try
-                {
-                    _context.Update(customer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CustomerExists(customer.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View();
             }
-            return View(customer);
         }
 
         // GET: Customers/Delete/5
@@ -153,7 +156,7 @@ namespace Trash_Collector.Controllers
                 return NotFound();
             }
 
-            return View(customer);
+            return View(_context.Customers);
         }
 
         // POST: Customers/Delete/5
@@ -161,6 +164,8 @@ namespace Trash_Collector.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+
             var customer = await _context.Customers.FindAsync(id);
             _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
