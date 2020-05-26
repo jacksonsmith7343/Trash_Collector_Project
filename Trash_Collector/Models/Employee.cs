@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,18 +12,18 @@ namespace Trash_Collector.Models
     {
 
         [Key]
-        //default view as a list of the day's pickups
+        
         public int ZipCode { get; set; }
 
-        //able to filter pickups by particular day
-
         public bool CompletedPickup { get; set; }
-
-        //all pickups have a charge applied to the customer
+        
         public int PickUpWithChargeApplied { get; set; }
         public int Id { get; internal set; }
 
-        //select a customer profile and see their address pinned on a google map
+        [ForeignKey("IdentityUser")]
+        public string IdentityUserId { get; set; }
+        public IdentityUser IdentityUser { get; set; }
+        
 
     }
 }

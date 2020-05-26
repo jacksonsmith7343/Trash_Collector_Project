@@ -48,22 +48,22 @@ namespace Trash_Collector.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "99a2ec1f-b4e7-424d-9f21-6a08a9a73901",
-                            ConcurrencyStamp = "1dccc00c-4dde-436f-a47b-45775d5deda4",
+                            Id = "ed61130d-cd34-41f1-b776-d0ff0a24ddab",
+                            ConcurrencyStamp = "94608143-8421-405e-9c25-163e8e363c2f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "043148bf-1be1-4424-9850-a90b9f8ea8e4",
-                            ConcurrencyStamp = "c63625fb-f7b4-4786-9116-19cd147afebb",
+                            Id = "26d17de2-78eb-4d5d-bfd8-4f1e1c8d5f5e",
+                            ConcurrencyStamp = "4cc763c0-c9d0-422b-942c-f783a0adaa26",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "89df4e24-d670-47de-9d30-bc1698b27f37",
-                            ConcurrencyStamp = "520afb82-8705-4948-857f-4616ed8c3e65",
+                            Id = "5405f8fe-b298-4b29-af59-3c99fac46a5b",
+                            ConcurrencyStamp = "473eaae7-c10e-4178-b7b2-45dc4d6aba31",
                             Name = "Employee",
                             NormalizedName = "Employee"
                         });
@@ -266,8 +266,8 @@ namespace Trash_Collector.Migrations
                     b.Property<string>("SuspendPickUpDay")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ZipCode")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -289,10 +289,15 @@ namespace Trash_Collector.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("PickUpWithChargeApplied")
                         .HasColumnType("int");
 
                     b.HasKey("ZipCode");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.ToTable("Employees");
                 });
@@ -349,6 +354,13 @@ namespace Trash_Collector.Migrations
                 });
 
             modelBuilder.Entity("Trash_Collector.Models.Customer", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+                });
+
+            modelBuilder.Entity("Trash_Collector.Models.Employee", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()

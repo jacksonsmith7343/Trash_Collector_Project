@@ -25,7 +25,7 @@ namespace Trash_Collector.Models
 
         public string ContinuePickUpDay { get; set; }
 
-        public string ZipCode { get; set; }
+        public int ZipCode { get; set; }
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }

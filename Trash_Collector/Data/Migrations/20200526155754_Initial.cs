@@ -47,20 +47,6 @@ namespace Trash_Collector.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employees",
-                columns: table => new
-                {
-                    ZipCode = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CompletedPickup = table.Column<bool>(nullable: false),
-                    PickUpWithChargeApplied = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employees", x => x.ZipCode);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -178,7 +164,7 @@ namespace Trash_Collector.Migrations
                     PaymentOwed = table.Column<int>(nullable: false),
                     SuspendPickUpDay = table.Column<string>(nullable: true),
                     ContinuePickUpDay = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<int>(nullable: false),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -192,20 +178,42 @@ namespace Trash_Collector.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "01cbe009-e6eb-45f5-bbae-be8488a0b11d", "192fbf54-3d0d-4de2-bc97-9f513df58573", "Admin", "ADMIN" });
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    ZipCode = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompletedPickup = table.Column<bool>(nullable: false),
+                    PickUpWithChargeApplied = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    IdentityUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.ZipCode);
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "09e49b85-022d-45b9-9048-a814a49edd73", "47e76446-1563-4b75-8660-9b3b5cac57b8", "Customer", "CUSTOMER" });
+                values: new object[] { "ed61130d-cd34-41f1-b776-d0ff0a24ddab", "94608143-8421-405e-9c25-163e8e363c2f", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2404680e-ff09-4ae8-9426-36d4d6ed1fc4", "a3342677-4977-4f1e-9200-7c35fcae4200", "Employee", "Employee" });
+                values: new object[] { "26d17de2-78eb-4d5d-bfd8-4f1e1c8d5f5e", "4cc763c0-c9d0-422b-942c-f783a0adaa26", "Customer", "CUSTOMER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "5405f8fe-b298-4b29-af59-3c99fac46a5b", "473eaae7-c10e-4178-b7b2-45dc4d6aba31", "Employee", "Employee" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -249,6 +257,11 @@ namespace Trash_Collector.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_IdentityUserId",
                 table: "Customers",
+                column: "IdentityUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_IdentityUserId",
+                table: "Employees",
                 column: "IdentityUserId");
         }
 

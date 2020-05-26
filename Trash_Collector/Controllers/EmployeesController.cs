@@ -26,17 +26,17 @@ namespace Trash_Collector.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var employee = _context.Customers.Where(e => e.IdentityUserId == userId).SingleOrDefault();
-
+            var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
+            var customerWithSharedZip = _context.Customers.Where(c => c.ZipCode == employee.ZipCode).ToList();
             if (userId == null)
             {
                 return RedirectToAction("Create");
             }
             else
             {
-                return View(_context.Employees);
+                return View(employee);
             }
-            //return View(await _context.Employees.ToListAsync());
+            
         }
 
         // GET: Employees/Details/5
@@ -115,19 +115,7 @@ namespace Trash_Collector.Controllers
 
             var employeeInDb = _context.Employees.Where(e => e.Id == id).FirstOrDefault();
             return View(employeeInDb);
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var employee = await _context.Employees
-            //    .FirstOrDefaultAsync(m => m.ZipCode == id);
-            //if (employee == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(employee);
+            
         }
 
         // POST: Employees/Delete/5
@@ -147,26 +135,19 @@ namespace Trash_Collector.Controllers
             {
                 return View();
             }
-            //var employee = await _context.Employees.FindAsync(id);
-            //_context.Employees.Remove(employee);
-            //await _context.SaveChangesAsync();
-            //return RedirectToAction(nameof(Index));
+           
         }
 
-        //private bool EmployeeExists(int id)
-        //{
-        //    return _context.Employees.Any(e => e.ZipCode == id);
-        //}
 
-        //public ActionResult TrashPickUpList()
-        //{
-            
-        //}
 
-        //public ActionResult FilterPickUps()
-        //{
 
-        //}
+        public ActionResult FilterPickUps()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); //gains access to info about the user that is signed in 
+            var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
+            var customersWithSpecificPickupDay = _context.Customers.Where(c => c.PickUpDay == employee.).ToList();
+            return View(customersWithSpecificPickupDay);
+        }
 
         //public ActionResult ConfirmPickUpComplete()
         //{
