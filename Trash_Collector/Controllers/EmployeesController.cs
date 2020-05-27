@@ -27,16 +27,30 @@ namespace Trash_Collector.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
-            var customerWithSharedZip = _context.Customers.Where(c => c.ZipCode == employee.ZipCode).ToList();
+
+            //get today's day of week
+            var today = DateTime.Today.DayOfWeek.ToString();
+
+            //an additional query is to check if service is suspended
+            var customerWithSharedZip = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == today).ToList();
             if (userId == null)
             {
                 return RedirectToAction("Create");
             }
             else
             {
-                return View(employee);
+                return View(customerWithSharedZip);
             }
             
+        }
+
+
+        public IActionResult ConfirmPickup(int CustomerId)
+        {
+            var customer = _context.Customers.Where(e => e.CustomerId == UserId).SingleOrDefault();
+
+            var pickupconfirmation = _context.Customers.Where(p => p.PaymentOwed == +15);
+            return View("Index");
         }
 
         // GET: Employees/Details/5
