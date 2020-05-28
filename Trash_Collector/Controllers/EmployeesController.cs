@@ -44,7 +44,7 @@ namespace Trash_Collector.Controllers
             
         }
 
-
+        
         public IActionResult ConfirmPickup(int CustomerId)
         {
             var customerFromDb = _context.Customers.Where(c => c.CustomerId == CustomerId).SingleOrDefault();
