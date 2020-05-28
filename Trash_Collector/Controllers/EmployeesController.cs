@@ -47,10 +47,10 @@ namespace Trash_Collector.Controllers
 
         public IActionResult ConfirmPickup(int CustomerId)
         {
-            var customer = _context.Customers.Where(e => e.CustomerId == UserId).SingleOrDefault();
-
-            var pickupconfirmation = _context.Customers.Where(p => p.PaymentOwed == +15);
-            return View("Index");
+            var customerFromDb = _context.Customers.Where(c => c.CustomerId == CustomerId).SingleOrDefault();
+            customerFromDb.PaymentOwed += 15;
+            _context.SaveChanges();
+            return View(customerFromDb);
         }
 
         // GET: Employees/Details/5
@@ -163,14 +163,7 @@ namespace Trash_Collector.Controllers
             return View(customersWithSpecificPickupDay);
         }
 
-        //public ActionResult ConfirmPickUpComplete()
-        //{
 
-        //}
-
-        //public ActionResult ConfirmPaymentApplied()
-        //{
-
-        //}
+       
     }
 }
