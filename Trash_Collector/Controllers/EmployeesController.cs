@@ -28,10 +28,8 @@ namespace Trash_Collector.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
 
-            //get today's day of week
             var today = DateTime.Today.DayOfWeek.ToString();
 
-            //an additional query is to check if service is suspended
             var customerWithSharedZip = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == today).ToList();
             if (userId == null)
             {
@@ -54,22 +52,22 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Employees/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var employee = await _context.Customers
-                .FirstOrDefaultAsync(e => e.EmployeeId == id);
-            if (employee == null)
-            {
-                return NotFound();
-            }
+        //    var employee = await _context.Customers
+        //        .FirstOrDefaultAsync(e => e.EmployeeId == id);
+        //    if (employee == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(employee);
-        }
+        //    return View(employee);
+        //}
 
         // GET: Employees/Create
         public IActionResult Create()

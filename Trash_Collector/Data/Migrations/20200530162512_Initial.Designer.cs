@@ -10,7 +10,7 @@ using Trash_Collector.Data;
 namespace Trash_Collector.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200526203133_Initial")]
+    [Migration("20200530162512_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,22 +50,22 @@ namespace Trash_Collector.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1e98da84-a63c-4442-9dbd-d79b506ca421",
-                            ConcurrencyStamp = "4a1790aa-4da1-4bd3-b22e-6c8f40f5cbd1",
+                            Id = "923d65d2-ae21-48f1-ae19-224836a25d18",
+                            ConcurrencyStamp = "87392858-dce7-4224-a601-c78160a53dd2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5ca8af54-41ca-4f90-8f68-fb0c44ec4d1d",
-                            ConcurrencyStamp = "9d4bb4f8-79a1-422e-8055-a713f1b3ea67",
+                            Id = "35d43810-75ae-4616-9412-5ec78fa71b5f",
+                            ConcurrencyStamp = "c1400cb9-bf4f-4165-b96f-0622a189784d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "8b2ba2e9-43d1-4fb3-ab93-c4aba3e9d8f3",
-                            ConcurrencyStamp = "212f990c-90d9-4e3c-aa93-7b1543a8f1d3",
+                            Id = "73a9e539-80c1-497f-9f20-31a4a54f1439",
+                            ConcurrencyStamp = "ac705efb-f206-4426-a2f9-88b9bc51321d",
                             Name = "Employee",
                             NormalizedName = "Employee"
                         });
@@ -250,14 +250,14 @@ namespace Trash_Collector.Migrations
                     b.Property<string>("ContinuePickUpDay")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ExtraPickUp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsServiceSuspended")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
