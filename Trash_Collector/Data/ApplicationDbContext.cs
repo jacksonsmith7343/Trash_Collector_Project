@@ -47,6 +47,7 @@ namespace Trash_Collector.Data
 
         public DbSet<Employee> Employees { get; set; }
 
+        public DbSet<PickUp> PickUps { get; set; }
 
 
     }

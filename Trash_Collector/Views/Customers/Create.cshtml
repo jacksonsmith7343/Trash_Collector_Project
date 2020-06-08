@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
@@ -19,29 +20,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="PickUpDay" class="control-label"></label>
-                <input asp-for="PickUpDay" class="form-control" />
+                <select asp-for="PickUpDay" class="form-control" asp-items="ViewBag.weekdays" ></select>
                 <span asp-validation-for="PickUpDay" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ExtraPickUp" class="control-label"></label>
-                <input asp-for="ExtraPickUp" class="form-control" />
-                <span asp-validation-for="ExtraPickUp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SuspendPickUpDay" class="control-label"></label>
-                <input asp-for="SuspendPickUpDay" class="form-control" />
-                <span asp-validation-for="SuspendPickUpDay" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContinuePickUpDay" class="control-label"></label>
-                <input asp-for="ContinuePickUpDay" class="form-control" />
-                <span asp-validation-for="ContinuePickUpDay" class="text-danger"></span>
-            </div>
-           
             <div class="form-group">
                 <label asp-for="ZipCode" class="control-label"></label>
                 <input asp-for="ZipCode" class="form-control" />
                 <span asp-validation-for="ZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -25,21 +25,26 @@ namespace Trash_Collector.Controllers
         // GET: Employees
         public async Task<IActionResult> Index()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
-
-            var today = DateTime.Today.DayOfWeek.ToString();
-
-            var customerWithSharedZip = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == today).ToList();
-            if (userId == null)
+            var employee = new Employee();
+            try
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                employee = _context.Employees.Where(e => e.IdentityUserId == userId).Single();
+            }
+            catch
             {
                 return RedirectToAction("Create");
             }
-            else
+
+            var today = DateTime.Today.Date;
+            //TODO: customers with one time pickup
+            var moreCustomers = _context.Customers.Where(c => c.ExtraPickUp.Date == today.Date).ToList();
+            var customerWithSharedZip = _context.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == today.DayOfWeek && c.ServiceSuspendedStart < today && c.ServiceSuspendEnd < today).ToList();
+            foreach (var item in moreCustomers)
             {
-                return View(customerWithSharedZip);
+                customerWithSharedZip.Add(item);
             }
-            
+            return View(customerWithSharedZip);
         }
 
         
@@ -84,6 +89,9 @@ namespace Trash_Collector.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                employee.IdentityUserId = userId;
+
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -110,8 +118,6 @@ namespace Trash_Collector.Controllers
             {
                 var employeeInDb = _context.Employees.Where(e => e.EmployeeId == id).FirstOrDefault();
                 employeeInDb.ZipCode = employee.ZipCode;
-                employeeInDb.CompletedPickup = employee.CompletedPickup;
-                employeeInDb.PickUpWithChargeApplied = employee.PickUpWithChargeApplied;
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -153,11 +159,11 @@ namespace Trash_Collector.Controllers
 
 
 
-        public ActionResult FilterPickUps()
+        public ActionResult FilterPickUps(DayOfWeek Today)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); //gains access to info about the user that is signed in 
             var employee = _context.Employees.Where(e => e.IdentityUserId == userId).SingleOrDefault();
-            var customersWithSpecificPickupDay = _context.Customers.Where(c => c.PickUpDay == "Saturday").ToList();
+            var customersWithSpecificPickupDay = _context.Customers.Where(c => c.PickUpDay == Today).ToList();
             return View(customersWithSpecificPickupDay);
         }
 

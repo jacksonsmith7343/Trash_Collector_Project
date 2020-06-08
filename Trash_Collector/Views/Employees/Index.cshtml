@@ -21,25 +21,27 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ExtraPickUp)
+            </th>          
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceSuspendedStart)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentOwed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SuspendPickUpDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContinuePickUpDay)
+                @Html.DisplayNameFor(model => model.ServiceSuspendEnd)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ZipCode)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+          
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -50,22 +52,21 @@
                 @Html.DisplayFor(modelItem => item.ExtraPickUp)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PaymentOwed)
+                @Html.DisplayFor(modelItem => item.ServiceSuspendedStart)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SuspendPickUpDay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContinuePickUpDay)
+                @Html.DisplayFor(modelItem => item.ServiceSuspendEnd)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ZipCode)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
-                <a asp-action="ConfirmPickup" asp-route-id="@item.CustomerId">ConfirmPickup</a>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>       
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

@@ -19,30 +19,30 @@ namespace Trash_Collector.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Pick up day" )]
-        public string PickUpDay { get; set; }
+        [Display(Name = "Pick up day")]
+        public DayOfWeek PickUpDay { get; set; }
 
         [Display(Name = "Extra pick up day")]
-        public string ExtraPickUp { get; set; }
+        public DateTime ExtraPickUp { get; set; }
 
         [Display(Name = "Payment Owed")]
         public int PaymentOwed { get; set; }
 
         [Display(Name = "Did you suspend your service?")]
-        public bool IsServiceSuspended { get; set; }
+        public DateTime ServiceSuspendedStart { get; set; }
 
         [Display(Name = "When your pickup suspension begins")]
-        public string SuspendPickUpDay { get; set; }
-
-        [Display(Name = "When your pickup will resume")]
-        public string ContinuePickUpDay { get; set; }
+        public DateTime ServiceSuspendEnd { get; set; }
 
         [Display(Name = "Zip Code")]
         public int ZipCode { get; set; }
 
+        public string Address { get; set; }
+
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
-        
+
+
     }
 }

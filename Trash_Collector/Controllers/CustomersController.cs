@@ -26,34 +26,27 @@ namespace Trash_Collector.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-
-            if (userId == null)
+            Customer customer = new Customer();
+            try
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                 customer = _context.Customers.Where(e => e.IdentityUserId == userId).Single();
+            }
+            catch(Exception)
+            {
+
                 return RedirectToAction("Create");
             }
-            else
-            {
-                return View(_context.Customers);
-            }
-
-
-
-
-            //return View();
+                
+            return View(customer);
         }
 
         // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(e => e.IdentityUserId == userId).SingleOrDefault();
+           
             if (customer == null)
             {
                 return NotFound();
@@ -65,8 +58,20 @@ namespace Trash_Collector.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+            Customer customer = new Customer();
             
-            return View();
+            List<DayOfWeek> daysOfweek = new List<DayOfWeek>();
+            daysOfweek.Add(DayOfWeek.Monday);
+            daysOfweek.Add(DayOfWeek.Tuesday);
+            daysOfweek.Add(DayOfWeek.Wednesday);
+            daysOfweek.Add(DayOfWeek.Thursday);
+            daysOfweek.Add(DayOfWeek.Friday);
+           
+
+            ViewData["weekdays"] = new SelectList(daysOfweek, customer.PickUpDay);
+
+
+            return View(customer);
         }
 
         // POST: Customers/Create
@@ -80,6 +85,9 @@ namespace Trash_Collector.Controllers
 
             if (ModelState.IsValid)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
+
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -88,12 +96,23 @@ namespace Trash_Collector.Controllers
         }
 
         // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit()
         {
-            var customerInDb = _context.Customers.Where(c => c.CustomerId == id).FirstOrDefault();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(e => e.IdentityUserId == userId).SingleOrDefault();
 
-            return View(customerInDb);
 
+            List<DayOfWeek> daysOfweek = new List<DayOfWeek>();
+            daysOfweek.Add(DayOfWeek.Monday);
+            daysOfweek.Add(DayOfWeek.Tuesday);
+            daysOfweek.Add(DayOfWeek.Wednesday);
+            daysOfweek.Add(DayOfWeek.Thursday);
+            daysOfweek.Add(DayOfWeek.Friday);
+
+
+            ViewData["weekdays"] = new SelectList(daysOfweek, customer.PickUpDay);
+            
+            return View(customer);
         }
 
 
@@ -105,20 +124,26 @@ namespace Trash_Collector.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Customer customer)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customerInDb = _context.Customers.Where(e => e.IdentityUserId == userId).SingleOrDefault();
+
             try
             {
-                var customerInDb = _context.Customers.Where(c => c.CustomerId == id).FirstOrDefault();
                 customerInDb.Name = customer.Name;
                 customerInDb.PickUpDay = customer.PickUpDay;
                 customerInDb.ExtraPickUp = customer.ExtraPickUp;
-                customerInDb.SuspendPickUpDay = customer.SuspendPickUpDay;
-                customerInDb.ContinuePickUpDay = customer.ContinuePickUpDay;
                 customerInDb.ZipCode = customer.ZipCode;
+                customerInDb.Address = customer.Address;
+                customerInDb.ServiceSuspendedStart = customer.ServiceSuspendedStart;
+                customerInDb.ServiceSuspendEnd = customer.ServiceSuspendEnd;
+
+
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
+
                 return View();
             }
         }
